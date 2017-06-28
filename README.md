@@ -17,5 +17,7 @@ open http://localhost:3000
 
 * React
 * Webpack
+* express
+* [WebSockets](https://github.com/websockets/ws)
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)

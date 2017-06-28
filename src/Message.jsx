@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 
 export default class Message extends Component {
   render() {
-    console.log("Rendering <Message />");
+    console.log('Rendering <Message />');
+    // Formats usernames and messages from parent component
     return (
-    <div className="message">
-      <span className="message-username">{this.props.username}</span>
-      <span className="message-content">{this.props.content}</span>
-    </div>
+      <div className='message'>
+        <span className='message-username'>{this.props.username}</span>
+        <span className='message-content'>{this.props.content}</span>
+      </div>
     );
   };
 };
