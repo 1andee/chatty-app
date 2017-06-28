@@ -2,6 +2,12 @@ import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 
+var ws = new WebSocket("ws://0.0.0.0:3001");
+
+ws.onopen = (ws) => {
+  console.log('Successfully connected to the Chatty Server back end');
+};
+
 export default class App extends Component {
 
   addMessage(newMessage) {
@@ -58,6 +64,5 @@ export default class App extends Component {
       </div>
     );
   };
-
 
 };

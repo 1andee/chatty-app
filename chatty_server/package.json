@@ -1,0 +1,26 @@
+{
+  "name": "chatty_server",
+  "version": "1.0.0",
+  "description": "Server to enable real-time communication between Chatty app clients.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1andee/chatty-app.git"
+  },
+  "keywords": [
+    "lighthouse labs",
+    "chatty app",
+    "react",
+    "webpack",
+    "chat"
+  ],
+  "author": "Ian Duke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1andee/chatty-app/issues"
+  },
+  "homepage": "https://github.com/1andee/chatty-app#readme"
+}
