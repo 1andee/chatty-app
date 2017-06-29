@@ -4,21 +4,17 @@ import MessageList from './MessageList.jsx';
 
 var ws = new WebSocket("ws://0.0.0.0:3001");
 
-ws.onopen = (ws) => {
-  console.log('Successfully connected to the Chatty Server back end');
-};
-
 export default class App extends Component {
 
   addMessage(newMessage) {
     newMessage.id = this.state.messages.length + 1;
-    this.setState( {messages: this.state.messages.concat(newMessage)} )
+    ws.send(JSON.stringify(newMessage)); // addMessage?
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: 'Bob'},  // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {name: ''},
       messages: [
         {
           id: 1,
@@ -36,13 +32,18 @@ export default class App extends Component {
 
   // Called after component is rendered and attached to DOM, but not yet visible.
   componentDidMount() {
+
+    ws.onopen = (ws) => {
+      console.log('Successfully connected to the Chatty Server back end');
+    };
+
     console.log('componentDidMount invoked, commencing 3 second delay')
     console.log('Simulating incoming message');
-  // Add a new message to the list of messages in the data store
+    // Add a new message to the list of messages in the data store
     const newMessage = {id: 3, username: 'Michelle', content: 'Hello there!'};
     const messages = this.state.messages.concat(newMessage);
-  // Update the state of the app component.
-  // Calling setState will trigger a call to render() in App and all child components.
+    // Update the state of the app component.
+    // Calling setState will trigger a call to render() in App and all child components.
     setTimeout(() => {
       this.setState( {messages: messages} )
     }, 3000);
@@ -50,8 +51,6 @@ export default class App extends Component {
 
   render() {
     console.log('Rendering <App />');
-    /* Passing messages array from Lines 11-22 to MessageList component on Line 49
-       Passing currentUser from Line 10 to ChatBar component on Line 50 */
     return (
       <div>
         <nav className='navbar'>
@@ -60,7 +59,8 @@ export default class App extends Component {
         <MessageList messages={this.state.messages}/>
         <ChatBar
           name={this.state.currentUser.name}
-          onNewMessage={this.addMessage.bind(this)} />
+          onNewMessage={this.addMessage.bind(this)}
+          />
       </div>
     );
   };

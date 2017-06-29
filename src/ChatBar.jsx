@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+const $ = (className) => document.querySelector(className);
+
 export default class ChatBar extends React.Component{
   render() {
     console.log('Rendering <ChatBar />');
@@ -14,8 +16,8 @@ export default class ChatBar extends React.Component{
   componentDidMount() {
 
     // Event Listener for when ENTER/RETURN key is pressed in chatbar
-    document.querySelector('.chatbar-message').addEventListener('keypress', (e) => {
-      const username = document.querySelector('.chatbar-username').value;
+    $('.chatbar-message').addEventListener('keypress', (e) => {
+      const username = $('.chatbar-username').value;
 
       // Ensures message can't be blank
       if (e.keyCode === 13 && e.target.value !== '') {
