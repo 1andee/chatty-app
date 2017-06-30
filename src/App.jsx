@@ -23,15 +23,14 @@ export default class App extends Component {
       newUserName.oldName = currentName;
       this.setState( {currentUser: newUserName.username} );
       ws.send(JSON.stringify(newUserName));
-    }
+    };
   };
 
   constructor(props) {
     super(props);
     this.state = {
       currentUser: 'Anonymous',
-      messages: [
-      ]
+      messages: []
     };
   };
 
@@ -47,9 +46,12 @@ export default class App extends Component {
       let broadcastMessage = JSON.parse(broadcast.data);
 
       switch(broadcastMessage.category) {
+        case 'connection':
+          let { count } = broadcastMessage;
+          this.setState( {users: count} );
         case 'system':
           let { username, oldName } = broadcastMessage;
-          broadcastMessage.notification = `**${oldName}** changed username to **${username}**`;
+          broadcastMessage.notification = (`**${oldName}** changed username to **${username}**`);
           this.setState( {messages: this.state.messages.concat(broadcastMessage)} );
           break;
         case 'chat':
@@ -57,6 +59,7 @@ export default class App extends Component {
           break;
       };
     };
+
   };
 
   render() {
@@ -64,6 +67,7 @@ export default class App extends Component {
       <div>
         <nav className='navbar'>
           <h1 className='navbar navbar-brand'>Chatty App</h1>
+          <span className='navbar-users'>Users online: {this.state.users}</span>
         </nav>
         <MessageList messages={this.state.messages}/>
         <ChatBar
