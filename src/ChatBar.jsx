@@ -15,7 +15,7 @@ export default class ChatBar extends React.Component{
 
   componentDidMount() {
 
-    // Event Listener for when ENTER/RETURN key is pressed in chatbar
+    // Event Listener for chatbar-message
     $('.chatbar-message').addEventListener('keypress', (e) => {
       const username = $('.chatbar-username').value;
 
@@ -26,6 +26,17 @@ export default class ChatBar extends React.Component{
         this.props.onNewMessage({
           username: (username.length === 0) ? 'Anonymous': username,
           content: e.target.value
+        });
+      };
+    });
+
+    // Event Listener for chatbar-username
+    $('.chatbar-username').addEventListener('keypress', (e) => {
+
+      if (e.keyCode === 13) {
+        const username = e.target.value;
+        this.props.onNewUserName({
+          username: (username.length === 0) ? 'Anonymous': username
         });
       };
     });

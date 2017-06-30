@@ -5,7 +5,7 @@ export default class MessageList extends Component {
   render() {
     console.log('Rendering <MessageList />');
 
-    // Iterates through each chat message from parent component(s) Message.jsx and App.jsx
+    // Iterate through each chat message from parent component(s)
     let messages = this.props.messages.map((message) => {
       return <Message
               key={message.id}
@@ -14,7 +14,7 @@ export default class MessageList extends Component {
               />
     });
 
-    // Formats the output from above array map method
+    // Format output from above array map method
     return (
       <div id='message'>
         <Message />

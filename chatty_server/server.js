@@ -15,14 +15,13 @@ const server = express()
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
-// Set up a callback that will run when a client connects to the server
-// When a client connects they are assigned a socket, represented by
-// the ws parameter in the callback.
+// Callback that runs when a client connects to the server
 wss.on('connection', (ws) => {
-  var seconds = Date.now();
-  var timestamp = new Date(seconds);
+  let seconds = Date.now();
+  let timestamp = new Date(seconds);
   console.log(`Client connected to Chatty Server at ${timestamp}`);
 
+  // Function to broadcast incoming chat messages
   wss.broadcast = function broadcast(data) {
     wss.clients.forEach(function each(client) {
       if (client.readyState === WebSocket.OPEN) {
@@ -32,14 +31,23 @@ wss.on('connection', (ws) => {
     });
   };
 
+  // Receive incoming chat messages and call the broadcast function
   ws.on('message', function incoming(message) {
-    var newMessage = JSON.parse(message);
-    let { username, content } = newMessage;
+    let newMessage = JSON.parse(message);
+    switch(newMessage.category) {
+      case 'chat':
+        console.log("This is a chat message")
+        break;
+      case 'system':
+          console.log("This is a system message");
+        break;
+    }
     newMessage.id = uuidv4();
-    console.log(`User ${username} said ${content} (ref: ${newMessage.id})`);
+    let { username, content, id } = newMessage;
+    console.log(`User ${username} said ${content} (ref: ${id})`);
     wss.broadcast(newMessage);
   });
 
-  // Set up a callback for when a client closes the socket. This usually means they closed their browser.
+  // Callback for when client closes the socket
   ws.on('close', () => console.log('Client disconnected from Chatty Server'));
 });

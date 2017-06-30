@@ -7,7 +7,13 @@ var ws = new WebSocket("ws://0.0.0.0:3001");
 export default class App extends Component {
 
   addMessage(newMessage) {
+    newMessage.category = "chat";
     ws.send(JSON.stringify(newMessage));
+  }
+
+  addUserName(newUserName) {
+    newUserName.category = "system";
+    ws.send(JSON.stringify(newUserName));
   }
 
   constructor(props) {
@@ -55,6 +61,7 @@ export default class App extends Component {
         <ChatBar
           name={this.state.currentUser.name}
           onNewMessage={this.addMessage.bind(this)}
+          onNewUserName={this.addUserName.bind(this)}
           />
       </div>
     );
