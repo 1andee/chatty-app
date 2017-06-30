@@ -4,10 +4,9 @@ const $ = (className) => document.querySelector(className);
 
 export default class ChatBar extends React.Component{
   render() {
-    console.log('Rendering <ChatBar />');
     return (
       <footer className='chatbar'>
-        <input className='chatbar-username' placeholder='Your Name (Optional)' defaultValue={this.props.name} />
+        <input className='chatbar-username' placeholder='Your Name (Optional)'  />
         <input className='chatbar-message' placeholder='Type a message and hit ENTER' />
       </footer>
     );
@@ -31,14 +30,17 @@ export default class ChatBar extends React.Component{
     });
 
     // Event Listener for chatbar-username
-    $('.chatbar-username').addEventListener('keypress', (e) => {
 
-      if (e.keyCode === 13) {
-        const username = e.target.value;
-        this.props.onNewUserName({
-          username: (username.length === 0) ? 'Anonymous': username
-        });
-      };
-    });
+      $('.chatbar-username').addEventListener('keypress', (e) => {
+        if (e.keyCode === 13) {
+          const username = e.target.value;
+          this.props.onNewUserName({
+            username: (username.length === 0) ? 'Anonymous': username
+          });
+        };
+      });
+
+
+
   };
 };

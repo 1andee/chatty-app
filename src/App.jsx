@@ -8,29 +8,29 @@ export default class App extends Component {
 
   addMessage(newMessage) {
     newMessage.category = "chat";
+    newMessage.username = this.state.currentUser;
     ws.send(JSON.stringify(newMessage));
-  }
+  };
 
   addUserName(newUserName) {
-    newUserName.category = "system";
-    ws.send(JSON.stringify(newUserName));
-  }
+    let currentName = this.state.currentUser;
+    // Checks if new username is identical to current one
+    if (newUserName.username === currentName) {
+      return;
+    } else {
+      // Generate system notification of name change
+      newUserName.category = "system";
+      newUserName.oldName = currentName;
+      this.setState( {currentUser: newUserName.username} );
+      ws.send(JSON.stringify(newUserName));
+    }
+  };
 
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: ''},
+      currentUser: 'Anonymous',
       messages: [
-        {
-          id: 1,
-          username: 'Bob',
-          content: 'Has anyone seen my marbles?',
-        },
-        {
-          id: 2,
-          username: 'Anonymous',
-          content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.'
-        }
       ]
     };
   };
@@ -45,13 +45,21 @@ export default class App extends Component {
     // Receive all chat broadcasts, add to this.state.messages, and update state
     ws.onmessage = (broadcast) => {
       let broadcastMessage = JSON.parse(broadcast.data);
-      let messages = this.state.messages.concat(broadcastMessage);
-      this.setState( {messages: messages} );
+
+      switch(broadcastMessage.category) {
+        case 'system':
+          let { username, oldName } = broadcastMessage;
+          broadcastMessage.notification = `**${oldName}** changed username to **${username}**`;
+          this.setState( {messages: this.state.messages.concat(broadcastMessage)} );
+          break;
+        case 'chat':
+          this.setState( {messages: this.state.messages.concat(broadcastMessage)} );
+          break;
+      };
     };
   };
 
   render() {
-    console.log('Rendering <App />');
     return (
       <div>
         <nav className='navbar'>
@@ -59,7 +67,6 @@ export default class App extends Component {
         </nav>
         <MessageList messages={this.state.messages}/>
         <ChatBar
-          name={this.state.currentUser.name}
           onNewMessage={this.addMessage.bind(this)}
           onNewUserName={this.addUserName.bind(this)}
           />

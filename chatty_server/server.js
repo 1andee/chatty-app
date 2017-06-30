@@ -34,18 +34,17 @@ wss.on('connection', (ws) => {
   // Receive incoming chat messages and call the broadcast function
   ws.on('message', function incoming(message) {
     let newMessage = JSON.parse(message);
-    switch(newMessage.category) {
-      case 'chat':
-        console.log("This is a chat message")
-        break;
-      case 'system':
-          console.log("This is a system message");
-        break;
-    }
     newMessage.id = uuidv4();
-    let { username, content, id } = newMessage;
-    console.log(`User ${username} said ${content} (ref: ${id})`);
-    wss.broadcast(newMessage);
+    switch(newMessage.category) {
+      case 'system':
+        console.log("This is a system message");
+        wss.broadcast(newMessage);
+        break;
+      default:
+        let { username, content, id } = newMessage;
+        console.log(`User ${username} said ${content} (ref: ${id})`);
+        wss.broadcast(newMessage);
+    };
   });
 
   // Callback for when client closes the socket

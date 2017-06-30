@@ -3,15 +3,23 @@ import Message from './Message.jsx';
 
 export default class MessageList extends Component {
   render() {
-    console.log('Rendering <MessageList />');
 
     // Iterate through each chat message from parent component(s)
     let messages = this.props.messages.map((message) => {
+      let { id, category, notification, username, content } = message;
+
+      if (category === "system") {
+        return <Message
+                key={id}
+                notification={notification}
+                />
+            } else {
       return <Message
-              key={message.id}
-              username={message.username}
-              content={message.content}
+              key={id}
+              username={username}
+              content={content}
               />
+          }
     });
 
     // Format output from above array map method
