@@ -10,16 +10,16 @@ export default class MessageList extends Component {
 
       if (category === "system") {
         return <Message
-                key={id}
-                notification={notification}
-                />
-            } else {
-      return <Message
-              key={id}
-              username={username}
-              content={content}
-              />
-          }
+          key={id}
+          notification={notification}
+          />
+      } else {
+        return <Message
+          key={id}
+          username={username}
+          content={content}
+          />
+      };
     });
 
     // Format output from above array map method
