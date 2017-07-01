@@ -49,7 +49,6 @@ wss.on('connection', (ws) => {
     newMessage.id = uuidv4();
     switch(newMessage.category) {
       case 'system':
-        console.log("This is a system message");
         wss.broadcast(newMessage);
         break;
       default:

@@ -6,19 +6,20 @@ var ws = new WebSocket("ws://0.0.0.0:3001");
 
 export default class App extends Component {
 
+  // Send new chat message to server
   addMessage(newMessage) {
     newMessage.category = "chat";
     newMessage.username = this.state.currentUser;
     ws.send(JSON.stringify(newMessage));
   };
 
+  // Send notification of name change to server
   addUserName(newUserName) {
     let currentName = this.state.currentUser;
     // Checks if new username is identical to current one
     if (newUserName.username === currentName) {
       return;
     } else {
-      // Generate system notification of name change
       newUserName.category = "system";
       newUserName.oldName = currentName;
       this.setState( {currentUser: newUserName.username} );
@@ -41,7 +42,7 @@ export default class App extends Component {
       console.log('Successfully connected to the Chatty Server back end');
     };
 
-    // Receive all chat broadcasts, add to this.state.messages, and update state
+    // Receive all broadcasts and update state accordingly
     ws.onmessage = (broadcast) => {
       let broadcastMessage = JSON.parse(broadcast.data);
 

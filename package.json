@@ -18,7 +18,7 @@
     "chatty-app"
   ],
   "author": "Ian Duke",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/1andee/chatty-app/issues"
   },
