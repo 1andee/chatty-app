@@ -17,7 +17,7 @@ export default class ChatBar extends React.Component{
     // Event Listener for chatbar-message
     $('.chatbar-message').addEventListener('keypress', (e) => {
       const username = $('.chatbar-username').value;
-      
+
       // Ensures message can't be blank
       if (e.keyCode === 13 && e.target.value !== '') {
 
@@ -26,6 +26,7 @@ export default class ChatBar extends React.Component{
           username: (username.length === 0) ? 'Anonymous': username,
           content: e.target.value
         });
+        e.target.value = '';
       };
     });
 
