@@ -24,9 +24,7 @@ open http://localhost:3000
 
 ### Dependencies
 
-* React
-* Webpack
-* express
-* [WebSockets](https://github.com/websockets/ws)
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* express 4.15.3
+* React 15.4.2
+* [WebSockets 3.0.0](https://github.com/websockets/ws)
+* UUID 3.1.0
