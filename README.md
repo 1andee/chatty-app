@@ -2,7 +2,7 @@
 
 A real-time web chat app built with React, WebSockets, Webpack and Babel.
 
-# Screenshot
+## Screenshot
 [![alt text](https://raw.githubusercontent.com/1andee/chatty-app/master/docs/index_thumb.png "Index")](https://raw.githubusercontent.com/1andee/chatty-app/master/docs/index.png)
 
 ### Getting Started
